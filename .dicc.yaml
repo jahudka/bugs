@@ -1,0 +1,13 @@
+containers:
+  src/bootstrap/container.ts:
+    className: BugsContainer
+    resources:
+      src/*/{application,domain,infrastructure}/**/*.ts:
+        excludeExports:
+          - BaseRoute
+          - RedirectResponse
+          - compileMiddlewareChain
+          - parseArgs
+          - placeholders
+          - snake
+      src/bootstrap/definitions.ts: ~
