@@ -9,7 +9,7 @@ default: check
 
 .PHONY: clean
 clean:
-	rm -f proxy2
+	rm -f $(binary)
 
 node_modules:
 	bun install --frozen-lockfile
@@ -46,13 +46,13 @@ check: node_modules
 
 .PHONY: dev
 dev:
-	bun run src/proxy2.ts daemon:run
+	bun run $(entrypoint) daemon:run
 
 .PHONY: build
 build: clean node_modules
-	bun build src/proxy2.ts --compile --minify --sourcemap --target=bun-linux-x64 --outfile proxy2
+	bun build $(entrypoint) --compile --minify --sourcemap --target=bun-linux-x64 --outfile $(binary)
 
 .PHONY: release
 release: build
 	@if test -z "$(CI)"; then echo "You should only run this in CI"; exit 1; fi
-	find . -mindepth 1 -maxdepth 1 -not -name proxy2 -exec rm -rf '{}' \;
+	find . -mindepth 1 -maxdepth 1 -not -name $(binary) -exec rm -rf '{}' \;
